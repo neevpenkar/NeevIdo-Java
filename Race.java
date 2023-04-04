@@ -1,9 +1,14 @@
-import java.util.Scanner;
+
 public class Race {
 
     // TODO: you may add fields and methods as required.
     private int Segments;
     private double[] SegLengths;
+
+    private int DriversLen;
+    private Driver[] Drivers;
+
+    private Car[] Cars;
 
     public Race(){
         // TODO: if you have added fields to the class, initialize them here.
@@ -13,22 +18,46 @@ public class Race {
         // A procedure to get a route from the user.
         
         // Step 1: Ask question and Allocate Memory
-        this.Segments = getPosInt("How many segments does the route contain?");
+        this.Segments = getPosInt("How many segments does the route contain? ");
         this.SegLengths = new double [this.Segments];
 
         // Step 2: Ask for each segment's length
         for (int i = 0; i < this.Segments; i++ ) {
-            this.SegLengths[i] = getPosDouble("What is the length of segment" + Integer.toString(i) + "?");
+            this.SegLengths[i] = getPosDouble("What is the length of segment " + Integer.toString(i) + " clc? " );
         }
 
     }
 
     public void getDriversAndCarsFromSysIn(){
         // A procedure to get the lists of drivers and cars from the user.
+        this.DriversLen = getPosInt("How many participants are there in the race?");
+        this.Drivers = new Driver[this.DriversLen];
+        this.Cars = new Car[this.DriversLen];
 
-        // TODO: implement here the code for getting from the user the list of
-        //  drivers and cars in the race. See example for expected behaviour in
-        //  the assignment description.
+        // for (int i = 0; i < this.DriversLen; i++) {
+        //     print("Please enter details for driver " + Integer.toString(i) +" :");
+        //     String temp1 = getString("What is the driver's name? ");
+        //     double temp2 = getPosDouble("What is the driver's braking rate? ");
+        //     double temp3 = getPosDouble("What is the driver's delay time? ");
+
+        //     this.Drivers[i] = new Driver(temp1, temp2, temp3);
+        // }
+
+        for (int i = 0; i < this.DriversLen; i++) {
+            print("Please enter details for car " + Integer.toString(i) +" :");
+            String temp1 = getString("What is the car's manufacturer? ");
+            double temp2 = getPosDouble("What is the car's acceleration? ");
+            double temp3 = getPosDouble("What is the car's maximum speed? ");
+            
+            this.Cars[i] = new Car(temp1, temp2, temp3);
+        }
+
+        for (int i = 0; i < this.DriversLen; i++) {
+            this.Drivers[i].PrintDriver();
+        }
+        for (int i = 0; i < this.DriversLen; i++) {
+            this.Cars[i].PrintCar();
+        }
     }
 
     public void runRace() {
@@ -62,40 +91,29 @@ public class Race {
         //  for expected behaviour in the assignment description.
     }
     public static void print(String data) {System.out.println(data);}
-    public static int getPosInt(String data){
-        int i;
-        Scanner obj = new Scanner(System.in);
-        try {
-            print(data);
-            i = obj.nextInt();
-            if (i < 0) {
-                print("Input must be a positive integer, got " + Integer.toString(i) );
-                i = getPosInt(data);
-                obj.close();
-            }
-        }
-        catch(Exception e) {
-            obj.close();
-            i = getPosInt(data);
+    public static int getPosInt(String data) {
+        int i = 0;
+        UserInput ui = new UserInput();
+        i = ui.getInt(data);
+        if (i <= 0) {
+            print("Input must be a positive Int, got " + Integer.toString(i));
+            return getPosInt(data);
         }
         return i;
     }
-    public static double getPosDouble(String data){
-        double i;
-        Scanner obj = new Scanner(System.in);
-        try {
-            print(data);
-            i = obj.nextDouble();
-            if (i < 0) {
-                print("Input must be a positive Double, got " + Double.toString(i) );
-                i = getPosDouble(data);
-                obj.close();
-            }
-        }
-        catch(Exception e) {
-            obj.close();
-            i = getPosDouble(data);
+    public static double getPosDouble(String data) {
+        double i = 0;
+        UserInput ui = new UserInput();
+        i = ui.getDouble(data);
+        if (i <= 0) {
+            print("Input must be a positive Double, got " + Double.toString(i));
+            return getPosDouble(data);
         }
         return i;
+    }
+
+    public static String getString(String data) {
+        UserInput ui = new UserInput();
+        return ui.getString(data);
     }
 }
