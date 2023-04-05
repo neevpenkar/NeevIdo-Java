@@ -6,9 +6,9 @@ public class Race {
     private double[] SegLengths;
 
     private int DriversLen;
-    private Driver[] Drivers;
-
     private Car[] Cars;
+
+    // private double[] Times;
 
     public Race(){
         // TODO: if you have added fields to the class, initialize them here.
@@ -23,38 +23,45 @@ public class Race {
 
         // Step 2: Ask for each segment's length
         for (int i = 0; i < this.Segments; i++ ) {
-            this.SegLengths[i] = getPosDouble("What is the length of segment " + Integer.toString(i) + " clc? " );
+            this.SegLengths[i] = getPosDouble("What is the length of segment " + Integer.toString(i) + " ? " );
         }
 
     }
 
     public void getDriversAndCarsFromSysIn(){
+        Driver[] Drivers;
         // A procedure to get the lists of drivers and cars from the user.
         this.DriversLen = getPosInt("How many participants are there in the race?");
-        this.Drivers = new Driver[this.DriversLen];
+        Drivers = new Driver[this.DriversLen];
         this.Cars = new Car[this.DriversLen];
 
-        // for (int i = 0; i < this.DriversLen; i++) {
-        //     print("Please enter details for driver " + Integer.toString(i) +" :");
-        //     String temp1 = getString("What is the driver's name? ");
-        //     double temp2 = getPosDouble("What is the driver's braking rate? ");
-        //     double temp3 = getPosDouble("What is the driver's delay time? ");
 
-        //     this.Drivers[i] = new Driver(temp1, temp2, temp3);
-        // }
+        for (int i = 0; i < this.DriversLen; i++) {
+            print("Please enter details for driver " + Integer.toString(i) +" :");
+            // String temp1 = getString("What is the driver's name? ");
+            // double temp2 = getPosDouble("What is the driver's braking rate? ");
+            // double temp3 = getPosDouble("What is the driver's delay time? ");
+            
+            String temp1 = "Ido";
+            double temp2 = 10;
+            double temp3 = 0.000001;
+
+            Drivers[i] = new Driver(temp1, temp2, temp3);
+        }
 
         for (int i = 0; i < this.DriversLen; i++) {
             print("Please enter details for car " + Integer.toString(i) +" :");
-            String temp1 = getString("What is the car's manufacturer? ");
-            double temp2 = getPosDouble("What is the car's acceleration? ");
-            double temp3 = getPosDouble("What is the car's maximum speed? ");
+            // String temp1 = getString("What is the car's manufacturer? ");
+            // double temp2 = getPosDouble("What is the car's acceleration? ");
+            // double temp3 = getPosDouble("What is the car's maximum speed? ");
             
-            this.Cars[i] = new Car(temp1, temp2, temp3);
+            String temp1 = "Lambo";
+            double temp2 = 10;
+            double temp3 = 20;
+
+            this.Cars[i] = new Car(Drivers[i], temp1, temp2, temp3);
         }
 
-        for (int i = 0; i < this.DriversLen; i++) {
-            this.Drivers[i].PrintDriver();
-        }
         for (int i = 0; i < this.DriversLen; i++) {
             this.Cars[i].PrintCar();
         }
@@ -64,8 +71,14 @@ public class Race {
         // A procedure to compute and print the time which took each user to
         // complete the route, and to print the winner.
 
-        // TODO: implement here the code question 1 in the assignment. See example
-        //  for expected behaviour in the assignment description.
+        for (int c = 0; c < this.DriversLen; c++) {
+            for(int i = 0; i < this.Segments; i++) {
+                this.Cars[c].calcTime(this.SegLengths[i]);
+            }       
+        }
+        for(int j = 0; j < this.DriversLen; j++) {
+            print(this.Cars[j].Nahag.Name + Double.toString(this.Cars[j].raceTime));
+        }
     }
 
     public void runAllPairsRace() {
