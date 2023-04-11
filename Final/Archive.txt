@@ -1,0 +1,30 @@
+public static int getPosInt(String data) {
+        int i = 0;
+        UserInput ui = new UserInput();
+        i = ui.getInt(data);
+        if (i <= 0) {
+            print("Input must be a positive Int, got " + Integer.toString(i));
+            return getPosInt(data);
+        }
+        return i;
+    }
+    public static double getPosDouble(String data) {
+        double i = 0;
+        UserInput ui = new UserInput();
+        i = ui.getDouble(data);
+        if (i <= 0) {
+            print("Input must be a positive Double, got " + Double.toString(i));
+            return getPosDouble(data);
+        }
+        return i;
+    }
+    public static String getString(String data) {
+        try {
+            UserInput ui = new UserInput();
+            return ui.getString(data);
+        }
+        catch(RuntimeException e) {
+            return getString(data);
+        }
+
+    }
